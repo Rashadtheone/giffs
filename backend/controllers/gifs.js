@@ -15,9 +15,9 @@ Router.get('/', (req, res) => {
     .then(gifs => res.json(gifs))
 })
 // exports all of seed data too root location.
-Router.get('/:title', (req, res) => {
+Router.get('/', (req, res) => {
   Gif
-      .findOne({title: req.params.title})
+      .findOne({name: req.params.name})
       .then(gifs => res.json(gifs))
 })
 // finds databse of gif, creates new and reutnrs all of it
@@ -32,15 +32,26 @@ Router.post('/', (req, res) => {
       })
 })
 // finds databse of gif, creates new and reutnrs all of it
-Router.put('/:title', (req, res) => {
+Router.put('/:gifsId', (req, res) => {
   Gif
-    .findOneAndUpdate({title: req.params.title}, req.body)
-    .then(gifs => res.json(gifs))
-})
-Router.delete('/:title', (req, res) => {
-  Gif
-      .findOneAndRemove({ title: req.params.title })
+    .findOneAndUpdate({_id: req.params.gifsId}, req.body)
+    .then(() => {
+      Gif
+      // .create(req.body)
+      .find()
       .then(gifs => res.json(gifs))
+    })
+})
+
+Router.delete('/:gifsId', (req, res) => {
+  console.log(req.params.gifsId)
+  Gif
+      .findOneAndRemove({_id: req.params.gifsId})
+      .then(() => {
+        Gif
+          .find()
+          .then(gifs => res.json(gifs))
+      })
 })
 //  allows you to update the files
 module.exports = Router

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 // imports mongoose as mongoose.
 
 const GifSchema = new mongoose.Schema({
-  title: String,
+  name: String,
   url: String
 })
 //creating Format For data to be taken from server. 
